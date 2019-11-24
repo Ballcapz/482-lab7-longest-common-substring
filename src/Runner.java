@@ -41,19 +41,20 @@ class Runner {
     private static PrintWriter resultsWriter;
 
     public static void main(String[] args) {
+        testLCSFunctions();
 
-        // testLCSFunctions();
-
-        String test1 = getFileTextAsString(
+        String book1 = getFileTextAsString(
                 "C:\\Users\\Zach\\Documents\\School\\Fall 2019\\482 Algorithms\\jekyllAndHydeBook.txt");
 
-        System.out.println(test1);
+        String book2 = getFileTextAsString(
+                "C:\\Users\\Zach\\Documents\\School\\Fall 2019\\482 Algorithms\\aModestProposalBook.txt");
 
-        // runFullExperiment("bruteForce-worstCase-1");
-        // runFullExperiment("bruteForce-worstCase-2");
+        runFullExperiment("bruteForce-singleBook-1", book1, book2);
+        runFullExperiment("bruteForce-singleBook-2", book1, book2);
 
     }
 
+    // random string generator for testing and performance testing
     public static String generateRandomStringOfLength(int length) {
         int leftLimit = 97; // letter 'a'
         int rightLimit = 122; // letter 'z'
@@ -69,6 +70,7 @@ class Runner {
         return generatedString;
     }
 
+    // convert a passed in text file to a string to test against
     public static String getFileTextAsString(String filePath) {
         String content = "";
 
@@ -81,7 +83,7 @@ class Runner {
         return content;
     }
 
-    private static void runFullExperiment(String resultsFileName) {
+    private static void runFullExperiment(String resultsFileName, String book1, String book2) {
         try {
             resultsFile = new FileWriter(ResultsFolderPath + resultsFileName);
             resultsWriter = new PrintWriter(resultsFile);
@@ -141,16 +143,23 @@ class Runner {
             int[] results = new int[3];
             // set up the strings for the trials
 
-            StringBuilder generatedString1 = new StringBuilder();
-            // // StringBuilder generatedString2 = new StringBuilder();
+            // StringBuilder generatedString1 = new StringBuilder();
+            // // // StringBuilder generatedString2 = new StringBuilder();
 
-            for (int i = 0; i < inputSize; i++) {
-                generatedString1.append("x");
-                // // generatedString2.append("x");
-            }
+            // for (int i = 0; i < inputSize; i++) {
+            // generatedString1.append("x");
+            // // // generatedString2.append("x");
+            // }
 
-            String formattedString1 = generatedString1.toString();
+            // String formattedString1 = generatedString1.toString();
             // String formattedString2 = generatedString2.toString();
+
+            int max = book1.length() - inputSize;
+            int randomIndex1 = rand.nextInt(max - 0 + 1) + 0;
+            int randomIndex2 = rand.nextInt(max - 0 + 1) + 0;
+
+            String formattedString1 = book1.substring(randomIndex1, randomIndex1 + inputSize);
+            String formattedString2 = book1.substring(randomIndex2, randomIndex2 + inputSize);
 
             // String formattedString1 = generateRandomStringOfLength(inputSize);
             // String formattedString2 = generateRandomStringOfLength(inputSize);
@@ -176,7 +185,7 @@ class Runner {
                 /* DO BIDNESS */
                 /////////////////////////////////////////
 
-                results = lcs.bruteForceLCS(formattedString1, formattedString1);
+                results = lcs.bruteForceLCS(formattedString1, formattedString2);
 
                 ///////////////////////////////////////////
                 /* END DO BIDNESS */
